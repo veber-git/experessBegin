@@ -16,9 +16,11 @@ const config = require('./config');
 //Использование функции промежуточной обработки для всех типов запросов в указанном пути
 //Необходимо прописывать до основного обработчика, если у него нет метода Next()
 app.use('/', function (req, res, next) {
+    console.log('MAIN PAGE');
+    console.log('Time:', Date.now());
     console.log('Request Type:', req.method);
     console.log('Request URL:', req.originalUrl);
-    console.log('Time:', Date.now());
+    console.log();
     next();
 });
 
@@ -35,6 +37,36 @@ app.get('/', (req, res) => {
     //Вывод страницы из файла
     res.sendFile(__dirname + '/client/html/index.html');
 });
+
+//Обработка GET запроса
+app.get('/requestParams', (req, res) => {
+    res.sendFile(__dirname + '/client/html/requestParams.html');
+});
+
+
+
+
+app.get('/requestParams/requestParams2', (req, res) => {
+    res.sendFile(__dirname + '/client/html/requestParams2.html');
+    console.log('REQUEST PARAMS PAGE');
+    console.log('req.method:    ' + req.method); //Содержит метод запроса - GET, POST, PUT etc.
+    console.log('req.originalUrl:   ' + req.originalUrl);
+    console.log('req.baseUrl:   ' + req.baseUrl);
+    console.log('path:  ' + req.path);
+    console.log('params:    ' + req.params);
+    console.log('hostname:  ' + req.hostname);
+    console.log('ip:    ' + req.ip);
+    console.log('ips:   ' + req.ips);
+    console.log('protocol:  ' + req.protocol); //Содержит в строчной форме значение протокола - http или https
+    console.log('query: ' + req.query);
+    console.log('secure:    ' + req.secure);
+    console.log('cookies:   ' + req.cookies);
+    console.log('stale: ' + req.stale);
+    console.log('subdomains:    ' + req.subdomains);
+    console.log('body:  ' + req.body);
+    console.log('url:   ' + req.url);
+    console.log('headers:   ' + req.headers);
+})
 
 //--------------------------------------------------------------------
 //Обработка GET запроса к адресу /secondPage с несколькими обработчиками
